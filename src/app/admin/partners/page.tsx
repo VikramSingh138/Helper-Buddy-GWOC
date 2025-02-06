@@ -1,0 +1,1 @@
+// partner approval and management

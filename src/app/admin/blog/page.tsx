@@ -1,0 +1,1 @@
+// blog adding and management page
