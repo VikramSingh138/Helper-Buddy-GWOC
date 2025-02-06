@@ -1,3 +1,5 @@
+'use client';
+
 import SearchBar from '@/components/ui/SearchBar';
 import ServiceCard from '@/components/ui/ServiceCard';
 import ServiceFilter  from '@/components/shared/ServiceFilter';
