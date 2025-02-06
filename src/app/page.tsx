@@ -1,80 +1,69 @@
-import Image from "next/image";
+'use client';
 
-const DocLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a
-    className="rounded-full border border-solid transition-colors flex items-center justify-center text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    {children}
-  </a>
-);
+import SearchBar from '@/components/ui/SearchBar';
+import { useState } from 'react';
+import { Service } from '@/lib/types';
+import ServiceCard from '@/components/ui/ServiceCard';
 
-const FooterLink = ({ href, icon, children }: { href: string; icon: string; children: React.ReactNode }) => (
-  <a
-    className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <Image aria-hidden src={icon} alt={`${children} icon`} width={16} height={16} />
-    {children}
-  </a>
-);
+// Sample data - Replace with actual API call
+const sampleServices: Service[] = [
+  {
+    id: '1',
+    title: 'House Cleaning',
+    description: 'Professional house cleaning services',
+    price: 999,
+    category: 'Cleaning',
+    availablePincodes: ['400001', '400002']
+  },
+  {
+    id: '2',
+    title: 'Plumbing',
+    description: 'Expert plumbing services',
+    price: 599,
+    category: 'Plumbing',
+    availablePincodes: ['400001', '400003']
+  },
+  // Add more sample services
+];
 
 export default function Home() {
+  const [services, setServices] = useState<Service[]>(sampleServices);
+
+  const handleSearch = (query: string) => {
+    if (!query) {
+      setServices(sampleServices);
+      return;
+    }
+    
+    const filtered = sampleServices.filter(service => 
+      service.title.toLowerCase().includes(query.toLowerCase()) ||
+      service.description.toLowerCase().includes(query.toLowerCase()) ||
+      service.category.toLowerCase().includes(query.toLowerCase())
+    );
+    setServices(filtered);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <DocLink href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app">
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </DocLink>
-          <DocLink href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app">
-            Read our docs
-          </DocLink>
+    <div className="container mx-auto px-4 py-8">
+      <section className="text-center mb-12">
+        <h1 className="text-4xl font-bold mb-4">Find Trusted Service Providers</h1>
+        <p className="text-gray-600 mb-8">Book reliable services at your doorstep</p>
+        <div className="max-w-2xl mx-auto">
+          <SearchBar 
+            onSearch={handleSearch}
+            suggestions={['Cleaning', 'Plumbing', 'Electrical', 'Painting']}
+          />
         </div>
-      </main>
+      </section>
 
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <FooterLink href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app" icon="/file.svg">
-          Learn
-        </FooterLink>
-        <FooterLink href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app" icon="/window.svg">
-          Examples
-        </FooterLink>
-        <FooterLink href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app" icon="/globe.svg">
-          Go to nextjs.org →
-        </FooterLink>
-      </footer>
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {services.map(service => (
+          <ServiceCard 
+            key={service.id}
+            service={service}
+          />
+        ))}
+      </section>
     </div>
   );
 }

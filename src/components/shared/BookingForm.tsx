@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { Service } from '@/lib/types';
+import Input from '@/components/ui/Input';
+import Button from '@/components/ui/Button';
 
 interface BookingFormProps {
   service: Service;
@@ -12,50 +14,35 @@ export default function BookingForm({ service, onSubmit }: BookingFormProps) {
   const [dateTime, setDateTime] = useState('');
   const [remarks, setRemarks] = useState('');
 
-  const minDateTime = new Date();
-  minDateTime.setHours(minDateTime.getHours() + 2); // Minimum 2 hours from now
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!dateTime) {
+      alert('Please select a date and time');
+      return;
+    }
+    onSubmit({ dateTime: new Date(dateTime), remarks });
+  };
 
   return (
-    <form 
-      className="space-y-4"
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit({ dateTime: new Date(dateTime), remarks });
-      }}
-    >
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium mb-1">
-          Select Date and Time
-        </label>
-        <input
+        <Input
           type="datetime-local"
-          min={minDateTime.toISOString().slice(0, 16)}
+          label="Select Date and Time"
           value={dateTime}
           onChange={(e) => setDateTime(e.target.value)}
-          className="w-full p-2 border rounded-md"
           required
         />
       </div>
-      
       <div>
-        <label className="block text-sm font-medium mb-1">
-          Additional Remarks
-        </label>
-        <textarea
+        <Input
+          label="Remarks"
           value={remarks}
           onChange={(e) => setRemarks(e.target.value)}
-          className="w-full p-2 border rounded-md"
           placeholder="Any specific requirements..."
-          rows={3}
         />
       </div>
-
-      <button
-        type="submit"
-        className="w-full bg-primary text-white py-2 rounded-md"
-      >
-        Proceed to Payment
-      </button>
+      <Button type="submit">Confirm Booking</Button>
     </form>
   );
 }
