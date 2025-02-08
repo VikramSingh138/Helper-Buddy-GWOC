@@ -19,12 +19,14 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-sm">
       <nav className="container mx-auto px-4 flex items-center justify-between h-16">
         <Link href="/" className="flex items-center">
-          <Image 
-            src="/helperbuddy-logo.svg" 
-            alt="HelperBuddy" 
-            width={150} 
-            height={40}
+          <div className='w-auto'>
+            <Image
+            src="/assets/helperbuddy-logo.svg"
+            alt="HelperBuddy"
+            width={75}
+            height={75}
           />
+          </div>
         </Link>
 
         <div className="hidden md:flex items-center gap-6">
@@ -32,9 +34,8 @@ export default function Header() {
             <Link
               key={item.name}
               href={item.href}
-              className={`text-sm ${
-                pathname === item.href ? 'text-primary' : 'text-gray-600'
-              }`}
+              className={`text-sm ${pathname === item.href ? 'text-primary' : 'text-gray-600'
+                }`}
             >
               {item.name}
             </Link>
@@ -46,7 +47,7 @@ export default function Header() {
             <Button variant="outline" size="sm">Login</Button>
           </Link>
           <Link href="/register">
-            <Button variant="outline"size="sm">Sign up</Button>
+            <Button variant="outline" size="sm">Sign up</Button>
           </Link>
         </div>
       </nav>
