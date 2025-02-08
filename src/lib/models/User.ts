@@ -1,10 +1,22 @@
-import mongoose, { Schema, models, model } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-const userSchema = new Schema({
+interface IUser extends Document {
+  email: string;
+  hashedPassword: string;
+  name: string;
+  phone: string;
+  userType: string;
+}
+
+const userSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true },
   hashedPassword: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
+  name: { type: String, required: true },
+  phone: { type: String, required: true },
+  userType: { type: String, required: true, enum: ['user', 'admin', 'serviceProvider'] },
 });
 
-// Avoid recompiling model if it already exists
-export const User = models.User || model('User', userSchema);
+const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
+
+export { User };
+export type { IUser };

@@ -1,18 +1,24 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/helperbuddy';
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+  throw new Error('Please define MONGODB_URI in .env file');
+}
 
 let dbConnected = false;
 
 export async function connectDB() {
-  if (dbConnected) {
-    return;
-  }
   try {
-    await mongoose.connect(MONGODB_URI);
+    if (dbConnected) {
+      return;
+    }
+
+    const conn = await mongoose.connect(MONGODB_URI as string);
     dbConnected = true;
-  } catch (error) {
-    console.error('Failed to connect to MongoDB:', error);
+    console.log(`MongoDB connected: ${conn.connection.host}`);
+  } catch (error: any) {
+    console.error('MongoDB connection error:', error.message);
     throw error;
   }
 }

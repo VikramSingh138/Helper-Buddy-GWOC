@@ -1,21 +1,28 @@
 'use client';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [userType, setUserType] = useState('user');
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/auth', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
-        body: JSON.stringify({ action: 'login', email, password }),
+        body: JSON.stringify({ email, password, userType }),
         headers: { 'Content-Type': 'application/json' },
       });
       const data = await res.json();
       alert(data.message);
-    } catch {
+      if (data.success) {
+        router.push('/services');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
       alert('Login error');
     }
   };
@@ -29,13 +36,24 @@ export default function LoginPage() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="current-password"
         />
+        <select
+          value={userType}
+          onChange={(e) => setUserType(e.target.value)}
+          autoComplete="off"
+        >
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+          <option value="serviceProvider">Service Provider</option>
+        </select>
         <button type="submit">Login</button>
       </form>
     </div>
