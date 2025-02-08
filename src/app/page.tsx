@@ -77,47 +77,72 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <section className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">
-          Find Trusted Service Providers
-        </h1>
-        <p className="text-gray-600 mb-8">
-          Book reliable services at your doorstep
-        </p>
-        <div className="max-w-2xl mx-auto">
-          <SearchBar
-            onSearch={handleSearch}
-            suggestions={["Cleaning", "Plumbing", "Electrical", "Painting"]}
-          />
-        </div>
-      </section>
-
-      <section className="flex justify-end mb-4">
-        {user ? (
-          <div className="flex items-center space-x-4">
-            <span className="text-lg font-semibold">{user.name}</span>
-            <button onClick={handleLogout} className="text-blue-500">
-              Logout
+    <>
+      <div className="container mw-none">
+        {/* <section className="container mw-none">
+          <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
+            <div className="carousel-inner">
+              <div className="carousel-item active">
+                <img src="../../assets/home1.jpeg" className="d-block w-100" alt="home1.jpeg"/>
+              </div>
+              <div className="carousel-item">
+                <img src="../../assets/home2.jpeg" className="d-block w-100" alt="home2.jpeg"/>
+              </div>
+              <div className="carousel-item">
+                <img src="../../assets/home3.jpeg" className="d-block w-100" alt="home3.jpeg"/>
+              </div>
+            </div>
+            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Next</span>
             </button>
           </div>
-        ) : (
-          <div className="flex space-x-4">
-            <a href="/login" className="text-blue-500">
-              Login
-            </a>
-            <a href="/register" className="text-blue-500">
-              Sign Up
-            </a>
+        </section> */}
+        <section className="text-center mb-12">
+          <h1 className="text-4xl font-bold mb-4">
+            Find Trusted Service Providers
+          </h1>
+          <p className="text-gray-600 mb-8">
+            Book reliable services at your doorstep
+          </p>
+          <div className="max-w-2xl mx-auto">
+            <SearchBar
+              onSearch={handleSearch}
+              suggestions={["Cleaning", "Plumbing", "Electrical", "Painting"]}
+            />
           </div>
-        )}
-      </section>
+        </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {services.map((service) => (
-          <ServiceCard key={service.id} service={service} />
-        ))}
-      </section>
-    </div>
+        <section className="flex justify-end mb-4">
+          {user ? (
+            <div className="flex items-center space-x-4">
+              <span className="text-lg font-semibold">{user.name}</span>
+              <button onClick={handleLogout} className="text-blue-500">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="flex space-x-4">
+              <a href="/login" className="text-blue-500">
+                Login
+              </a>
+              <a href="/register" className="text-blue-500">
+                Sign Up
+              </a>
+            </div>
+          )}
+        </section>
+
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {services.map((service) => (
+            <ServiceCard key={service.id} service={service} />
+          ))}
+        </section>
+      </div>
+    </>
   );
 }
