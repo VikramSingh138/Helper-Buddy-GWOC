@@ -18,9 +18,9 @@ export default function Button({
   const baseStyles = 'rounded-full transition-colors flex items-center justify-center gap-2';
   
   const variants = {
-    primary: 'bg-foreground text-background hover:bg-[#383838] dark:hover:bg-[#ccc]',
+    primary: 'bg-gray-100 text-black font-semibold py-2 px-4 border border-gray-500 hover:bg-white hover:text-black hover:border-white rounded',
     secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100',
-    outline: 'border border-solid border-black/[.08] dark:border-white/[.145] hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a]'
+    outline: 'bg-white text-black border border-black hover:bg-black hover:text-white font-bold py-2 px-4 rounded-full transition-colors'
   };
 
   const sizes = {

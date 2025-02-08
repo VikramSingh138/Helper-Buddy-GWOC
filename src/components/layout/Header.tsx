@@ -46,7 +46,7 @@ export default function Header() {
             <Button variant="outline" size="sm">Login</Button>
           </Link>
           <Link href="/register">
-            <Button size="sm">Sign up</Button>
+            <Button variant="outline"size="sm">Sign up</Button>
           </Link>
         </div>
       </nav>
