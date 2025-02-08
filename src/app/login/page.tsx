@@ -21,7 +21,11 @@ export default function LoginPage() {
       if (data.success) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
-        router.push('/services');
+        if (data.user.userType === 'serviceProvider') {
+          router.push('/provider/dashboard');
+        } else {
+          router.push('/services');
+        }
       }
     } catch (error) {
       console.error('Login error:', error);

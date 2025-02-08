@@ -12,7 +12,7 @@ export default function ScheduledServices({ services }: ScheduledServicesProps) 
       {services.map(service => (
         <div key={service.id} className="bg-white rounded-lg shadow-md p-4">
           <h3 className="text-lg font-semibold">{service.title}</h3>
-          <p className="text-gray-600">{service.dateTime.toLocaleString()}</p>
+          <p className="text-gray-600">{service.dateTime ? service.dateTime.toLocaleString() : 'No date available'}</p>
           <p className="text-gray-600">Pincode: {service.pincode}</p>
           <p className="text-gray-600">Status: {service.status}</p>
         </div>

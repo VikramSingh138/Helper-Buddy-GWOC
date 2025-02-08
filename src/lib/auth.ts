@@ -6,6 +6,11 @@ interface User {
   name: string;
 }
 
+export function logout() {
+  localStorage.removeItem('user');
+  window.location.reload(); // Force a reload to clear all states
+}
+
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [isServiceProvider, setIsServiceProvider] = useState(false);
@@ -16,7 +21,7 @@ export function useAuth() {
       try {
         const parsedUser = JSON.parse(userData);
         setUser(parsedUser);
-        setIsServiceProvider(parsedUser.role === 'serviceProvider');
+        setIsServiceProvider(parsedUser.userType === 'serviceProvider');
       } catch (error) {
         console.error('Error parsing user data from local storage:', error);
         setUser(null);
