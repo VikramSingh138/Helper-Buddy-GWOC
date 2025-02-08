@@ -1,21 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
-import { User } from '@/lib/models/User';
+import jwt from 'jsonwebtoken';
+import { User, ServiceProvider, Admin } from '@/lib/models/User';
 import { connectDB } from '@/lib/db/mongoose';
+
+const JWT_SECRET = process.env.JWT_SECRET!;
 
 export async function POST(request: NextRequest) {
   try {
     await connectDB();
     const { email, password, name, phone, userType } = await request.json();
     
-    if (!userType || !['user', 'admin', 'serviceProvider'].includes(userType)) {
+    let Model;
+    if (userType === 'user') {
+      Model = User;
+    } else if (userType === 'serviceProvider') {
+      Model = ServiceProvider;
+    } else if (userType === 'admin') {
+      Model = Admin;
+    } else {
       return NextResponse.json({ 
         success: false, 
         message: 'Invalid user type' 
       });
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await Model.findOne({ email });
     if (existingUser) {
       return NextResponse.json({ 
         success: false, 
@@ -24,17 +34,25 @@ export async function POST(request: NextRequest) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({ 
+    const newUser = await Model.create({ 
       email, 
       hashedPassword, 
       name, 
-      phone,
-      userType
+      phone
     });
+
+    const token = jwt.sign({ id: newUser._id, email: newUser.email, userType: newUser.userType }, JWT_SECRET, { expiresIn: '1h' });
 
     return NextResponse.json({ 
       success: true, 
-      message: 'User registered successfully' 
+      message: 'User registered successfully',
+      token,
+      user: { 
+        id: newUser._id, 
+        email: newUser.email, 
+        name: newUser.name,
+        userType: newUser.userType
+      }
     });
   } catch (error) {
     console.error('Registration error:', error);

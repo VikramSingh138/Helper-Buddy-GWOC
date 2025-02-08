@@ -1,9 +1,12 @@
 'use client';
 
 import SearchBar from '@/components/ui/SearchBar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Service } from '@/lib/types';
 import ServiceCard from '@/components/ui/ServiceCard';
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.JWT_SECRET!;
 
 // Sample data - Replace with actual API call
 const sampleServices: Service[] = [
@@ -28,6 +31,21 @@ const sampleServices: Service[] = [
 
 export default function Home() {
   const [services, setServices] = useState<Service[]>(sampleServices);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        setUser(decoded);
+      } catch (error) {
+        console.error('Invalid token:', error);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+      }
+    }
+  }, []);
 
   const handleSearch = (query: string) => {
     if (!query) {
@@ -43,6 +61,12 @@ export default function Home() {
     setServices(filtered);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <section className="text-center mb-12">
@@ -54,6 +78,20 @@ export default function Home() {
             suggestions={['Cleaning', 'Plumbing', 'Electrical', 'Painting']}
           />
         </div>
+      </section>
+
+      <section className="flex justify-end mb-4">
+        {user ? (
+          <div className="flex items-center space-x-4">
+            <span className="text-lg font-semibold">{user.name}</span>
+            <button onClick={handleLogout} className="text-blue-500">Logout</button>
+          </div>
+        ) : (
+          <div className="flex space-x-4">
+            <a href="/login" className="text-blue-500">Login</a>
+            <a href="/register" className="text-blue-500">Sign Up</a>
+          </div>
+        )}
       </section>
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">

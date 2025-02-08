@@ -5,7 +5,6 @@ interface IUser extends Document {
   hashedPassword: string;
   name: string;
   phone: string;
-  userType: string;
 }
 
 const userSchema: Schema = new Schema({
@@ -13,10 +12,11 @@ const userSchema: Schema = new Schema({
   hashedPassword: { type: String, required: true },
   name: { type: String, required: true },
   phone: { type: String, required: true },
-  userType: { type: String, required: true, enum: ['user', 'admin', 'serviceProvider'] },
 });
 
 const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
+const ServiceProvider = mongoose.models.ServiceProvider || mongoose.model<IUser>('ServiceProvider', userSchema);
+const Admin = mongoose.models.Admin || mongoose.model<IUser>('Admin', userSchema);
 
-export { User };
+export { User, ServiceProvider, Admin };
 export type { IUser };
