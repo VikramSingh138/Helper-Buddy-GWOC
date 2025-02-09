@@ -32,47 +32,35 @@ export default function RegisterPage() {
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
+    <div className='container-fluid my-10' style={{maxWidth: '60%'}}>
+      <h1 className='text-center'>Sign Up</h1>
       <form onSubmit={handleRegister}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoComplete="email"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="new-password"
-        />
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          autoComplete="name"
-        />
-        <input
-          type="text"
-          placeholder="Phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          autoComplete="tel"
-        />
-        <select
-          value={userType}
-          onChange={(e) => setUserType(e.target.value)}
-          autoComplete="off"
-        >
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-          <option value="serviceProvider">Service Provider</option>
-        </select>
-        <button type="submit">Register</button>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">Name</label>
+          <input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">Email address</label>
+          <input type="email" className="form-control" id="email" value={email} placeholder='example@email.com' onChange={(e) => setEmail(e.target.value)} autoComplete="email" aria-describedby="emailHelp" />
+          <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="phone" className="form-label">Phone</label>
+          <input type="text" className="form-control" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Login as?</label>
+          <select className="form-select" aria-label="Default select example" value={userType} onChange={(e) => setUserType(e.target.value)} autoComplete="off">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+            <option value="serviceProvider">Service Provider</option>
+          </select>
+        </div>
+        <button type="submit" className="btn btn-primary">Register</button>
       </form>
     </div>
   );

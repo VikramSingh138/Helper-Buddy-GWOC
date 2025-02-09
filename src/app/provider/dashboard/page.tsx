@@ -43,7 +43,7 @@ export default function ProviderDashboard() {
                 <p>Status: {booking.status}</p>
               </div>
               <div>
-                {booking.status === 'ACCEPTED' && (
+                {booking.status === 'accepted' && (
                   <button 
                     className="bg-green-500 text-white px-4 py-2 rounded"
                     onClick={() => {/* Add completion logic */}}
