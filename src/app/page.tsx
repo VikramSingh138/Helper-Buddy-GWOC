@@ -360,6 +360,7 @@ export default function Home() {
       <div className="container">
         {/* Background Image with Search Section Overlay */}
         <section className="relative w-full h-auto my-10">
+          {/* This is old Searchbar */}
           {/* Search Section Overlaid on Background */}
           {/* <div className="absolute inset-0 flex flex-col justify-center items-center text-center z-10 p-6 rounded-lg w-3/4 mx-auto mt-12">
             <h1 className="text-4xl font-bold mb-4 drop-shadow-lg">
@@ -375,6 +376,8 @@ export default function Home() {
               />
             </div>
           </div> */}
+
+          {/* This is new temporary Searchbar */}
           <div className="container d-flex flex-row">
             <div className="p-6">
               <h1 className="text-center mt-10">Find Trusted Service Providers</h1>
