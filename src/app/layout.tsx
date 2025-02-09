@@ -9,6 +9,7 @@ import { AuthProvider } from '@/lib/contexts/AuthContext';
 import "bootstrap/dist/css/bootstrap.min.css";
 import dynamic from "next/dynamic";
 import AddBootstrap from "./AddBootstrap";
+import Footer from '@/components/layout/Footer';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
             </main>
           </AuthProvider>
         </Suspense>
+        <Footer/>
       </body>
     </html>
   );
