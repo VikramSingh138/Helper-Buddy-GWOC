@@ -164,6 +164,16 @@ export default function Header() {
           )}
         </button>
 
+        {/* Mobile Menu (Dropdown) */}
+        {isOpen && (
+          <div className="absolute top-full left-0 w-full bg-gray-800 flex flex-col items-center space-y-4 p-4 md:hidden">
+            <a href="#" className="text-white">Home</a>
+            <a href="#" className="text-white">Services</a>
+            <a href="#" className="text-white">About</a>
+            <a href="#" className="text-white">Contact</a>
+          </div>
+        )}
+
         {/* Navbar Links */}
         <div className={`md:flex items-center space-x-6 ${isOpen ? "block" : "hidden"} w-full md:w-auto mt-2 md:mt-0`}>
           {navigation.map((item) => (
