@@ -2,9 +2,11 @@
 
 import SearchBar from '@/components/ui/SearchBar';
 import ServiceCard from '@/components/ui/ServiceCard';
-import ServiceFilter  from '@/components/shared/ServiceFilter';
-import { useState } from 'react';
+import ServiceFilter from '@/components/shared/ServiceFilter';
+import { useState, useEffect } from 'react';
 import { Service } from '@/lib/types';
+import ServiceProviderForm from '@/components/ui/ServiceProviderForm';
+import { useAuth } from '@/lib/auth';
 
 // Sample data - Replace with actual API call
 const sampleServices: Service[] = [
@@ -14,7 +16,8 @@ const sampleServices: Service[] = [
     description: 'Professional house cleaning services',
     price: 999,
     category: 'Cleaning',
-    availablePincodes: ['400001', '400002']
+    availablePincodes: ['400001', '400002'],
+    image: '/images/cleaning.jpg'
   },
   {
     id: '2',
@@ -22,13 +25,15 @@ const sampleServices: Service[] = [
     description: 'Expert plumbing services',
     price: 599,
     category: 'Plumbing',
-    availablePincodes: ['400001', '400003']
+    availablePincodes: ['400001', '400003'],
+    image: '/images/plumbing.jpg'
   },
   // Add more sample services
 ];
 
 export default function ServicesPage() {
   const [services, setServices] = useState<Service[]>(sampleServices);
+  const { user, isServiceProvider } = useAuth();
 
   const handleSearch = (query: string) => {
     if (!query) {
@@ -46,6 +51,7 @@ export default function ServicesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {isServiceProvider && <ServiceProviderForm />}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <aside className="md:col-span-1">
           <ServiceFilter onFilter={(filters) => {

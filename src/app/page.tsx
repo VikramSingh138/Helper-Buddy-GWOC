@@ -6,6 +6,7 @@ import { Service } from "@/lib/types";
 import ServiceCard from "@/components/ui/ServiceCard";
 import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET!;
+import Image from 'next/image';
 
 // Sample data - Replace with actual API call
 const sampleServices: Service[] = [
@@ -77,34 +78,12 @@ export default function Home() {
 
   return (
     <>
-      <div className="container mw-none">
+      <div className="container">
         {/* Background Image with Search Section Overlay */}
-        <section className="relative w-full h-[100vh]">
-          {/* Background Image Carousel */}
-          <div id="carouselExampleAutoplaying" className="carousel slide absolute inset-0 z-0 h-full" data-bs-ride="carousel">
-            <div className="carousel-inner h-full">
-              <div className="carousel-item active">
-                <img src="../../assets/home1.jpeg" className="d-block w-full h-full object-cover" alt="home1.jpeg"/>
-              </div>
-              <div className="carousel-item">
-                <img src="../../assets/home2.jpeg" className="d-block w-full h-full object-cover" alt="home2.jpeg"/>
-              </div>
-              <div className="carousel-item">
-                <img src="../../assets/home3.jpeg" className="d-block w-full h-full object-cover" alt="home3.jpeg"/>
-              </div>
-            </div>
-            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Next</span>
-            </button>
-          </div>
-
+        <section className="relative w-full h-auto my-10">
+          {/* This is old Searchbar */}
           {/* Search Section Overlaid on Background */}
-          <div className="absolute inset-0 flex flex-col justify-center items-center text-center z-10 p-6 rounded-lg w-3/4 mx-auto mt-12">
+          {/* <div className="absolute inset-0 flex flex-col justify-center items-center text-center z-10 p-6 rounded-lg w-3/4 mx-auto mt-12">
             <h1 className="text-4xl font-bold mb-4 drop-shadow-lg">
               Find Trusted Service Providers
             </h1>
@@ -117,11 +96,28 @@ export default function Home() {
                 suggestions={["Cleaning", "Plumbing", "Electrical", "Painting"]}
               />
             </div>
+          </div> */}
+
+          {/* This is new temporary Searchbar */}
+          <div className="container d-flex flex-row">
+            <div className="p-6">
+              <h1 className="text-center mt-10">Find Trusted Service Providers</h1>
+              <h5 className="text-center mt-3">Book reliable services at your doorstep</h5>
+              <div className="container-fluid mt-5">
+                <form className="d-flex " role="search">
+                  <input className="form-control me-2 rounded-start-5" type="search" placeholder="What are you looking for?" aria-label="Search" />
+                  <button className="btn btn-outline-success rounded-end-5" type="submit"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" /></svg></button>
+                </form>
+              </div>
+            </div>
+            <div className="d-flex flex-fill p-6 justify-content-center align-items-center w-auto">
+              <Image src="/assets/undraw_booking_1ztt.svg" alt="book" width={500} height={500} />
+            </div>
           </div>
         </section>
 
         {/* Service Cards Section (Now Positioned Below the Background Image) */}
-        <section className="mt-16 px-4">
+        <section className="relative mt-16 px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Available Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {services.map((service) => (

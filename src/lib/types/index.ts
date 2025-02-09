@@ -13,6 +13,13 @@ export interface Service {
   price: number;
   category: string;
   availablePincodes: string[];
+  image?: string;
+  dateTime?: Date;
+  status?: 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'COMPLETED';
+  pincode?: string;
+  partnerId?: string;
+  userId?: string;
+  remarks?: string;
 }
 
 export interface ServicePartner {
@@ -22,6 +29,9 @@ export interface ServicePartner {
   services: string[];
   servicePincodes: string[];
   isApproved: boolean;
+  rating?: number;
+  totalBookings?: number;
+  completedBookings?: number;
 }
 
 export interface Booking {
@@ -30,6 +40,8 @@ export interface Booking {
   serviceId: string;
   partnerId?: string;
   dateTime: Date;
-  status: 'PENDING' | 'ACCEPTED' | 'COMPLETED';
+  status: 'PENDING' | 'ACCEPTED' | 'COMPLETED' | 'REJECTED';
   remarks?: string;
+  pincode: string;
+  price: number;
 }

@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { Service } from '@/lib/types';
 import Button from './Button';
-import BookingForm from '@/components/shared/BookingForm';
 import Modal from './Modal';
+import Input from './Input';
+import { useAuth } from '@/lib/auth';
 
 interface ServiceCardProps {
   service: Service;
@@ -12,17 +13,57 @@ interface ServiceCardProps {
 
 export default function ServiceCard({ service }: ServiceCardProps) {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [dateTime, setDateTime] = useState('');
+  const [pincode, setPincode] = useState('');
+  const { user } = useAuth();
 
-  const handleBook = (bookingData: { dateTime: Date; remarks: string }) => {
-    console.log('Booking data:', bookingData);
-    setIsBookingOpen(false);
+  // Add default image
+  const defaultImage = '/images/service-default.jpg'; // Make sure this image exists in your public folder
+  const backgroundImage = service.image || defaultImage;
+
+  const handleBook = async () => {
+    if (!user) {
+      alert('Please login to book a service');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/service-requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          serviceId: service.id,
+          userId: user.id,
+          dateTime: new Date(dateTime),
+          pincode,
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to create service request');
+
+      // Reset form and close modal
+      setDateTime('');
+      setPincode('');
+      setIsBookingOpen(false);
+      alert('Service request sent successfully!');
+    } catch (error) {
+      console.error('Error creating service request:', error);
+      alert('Failed to send service request');
+    }
   };
 
   return (
     <div 
       className="relative bg-black text-white rounded-lg shadow-md overflow-hidden transition-transform transform 
                  hover:scale-105 hover:shadow-2xl"
-      style={{ backgroundImage: `url(${service.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      style={{ 
+        backgroundImage: `url(${backgroundImage})`, 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center',
+        minHeight: '200px' // Add minimum height
+      }}
     >
       {/* Dark Overlay for Better Readability */}
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -41,7 +82,25 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 
       {/* Booking Modal */}
       <Modal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} title={`Book ${service.title}`}>
-        <BookingForm service={service} onSubmit={handleBook} />
+        <div className="space-y-4">
+          <Input
+            label="Preferred Date and Time"
+            type="datetime-local"
+            value={dateTime}
+            onChange={(e) => setDateTime(e.target.value)}
+            required
+          />
+          <Input
+            label="Your Pincode"
+            type="text"
+            value={pincode}
+            onChange={(e) => setPincode(e.target.value)}
+            required
+          />
+          <Button onClick={handleBook} disabled={!dateTime || !pincode}>
+            Confirm Booking
+          </Button>
+        </div>
       </Modal>
     </div>
   );
