@@ -99,7 +99,7 @@ export default function Home() {
           </div> */}
 
           {/* This is new temporary Searchbar */}
-          <div className="container d-flex flex-row">
+          {/* <div className="container d-flex flex-row">
             <div className="p-6">
               <h1 className="text-center mt-10">Find Trusted Service Providers</h1>
               <h5 className="text-center mt-3">Book reliable services at your doorstep</h5>
@@ -111,6 +111,33 @@ export default function Home() {
               </div>
             </div>
             <div className="d-flex flex-fill p-6 justify-content-center align-items-center w-auto">
+              <Image src="/assets/undraw_booking_1ztt.svg" alt="book" width={500} height={500} />
+            </div>
+          </div> */}
+          <div className="flex flex-col md:flex-row items-center justify-between p-6 gap-6">
+            {/* Search Bar (55% width on medium+ screens, full width on small screens) */}
+            <div className="w-full md:w-7/12 text-center">
+              <h1 className="mt-10 text-3xl font-bold">Find Trusted Service Providers</h1>
+              <h5 className="mt-3 text-lg text-gray-600">Book reliable services at your doorstep</h5>
+              <div className="mt-5 flex justify-center">
+                <form className="flex w-3/4" role="search">
+                  <input
+                    className="flex-grow p-2 rounded-l-lg border border-gray-300"
+                    type="search"
+                    placeholder="What are you looking for?"
+                    aria-label="Search"
+                  />
+                  <button className="px-4 py-2 bg-green-500 text-white rounded-r-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff">
+                      <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
+                    </svg>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            {/* Image (45% width on medium+ screens, hidden on small screens) */}
+            <div className="hidden md:flex md:w-5/12 justify-center">
               <Image src="/assets/undraw_booking_1ztt.svg" alt="book" width={500} height={500} />
             </div>
           </div>
