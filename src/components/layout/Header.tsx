@@ -99,10 +99,10 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-black shadow-md">
-      <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
+      <nav className="container mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <Image src="/assets/helperbuddy-logo.svg" alt="HelperBuddy" width={60} height={60} />
+          <Image src="/assets/helperbuddy-logo.svg" alt="HelperBuddy" width={75} height={75} />
         </Link>
 
         {/* Mobile Menu Button (Toggles Open/Close) */}
@@ -120,15 +120,15 @@ export default function Header() {
 
         {/* Mobile Dropdown Menu */}
         {isOpen && (
-          <div className="absolute top-full left-0 w-full bg-black flex flex-col items-center space-y-4 p-6 md:hidden">
+          <div className="absolute top-full left-0 w-full bg-black flex flex-col space-y-4 p-6 md:hidden">
             {navigation.map((item) => (
-              <Link key={item.name} href={item.href} className="text-white text-lg hover:text-gray-400">
+              <Link key={item.name} href={item.href} className="nav-link text-white text-lg hover:text-gray-400">
                 {item.name}
               </Link>
             ))}
 
             {/* Login / Signup Buttons for Mobile */}
-            <div className="flex flex-col items-center space-y-3 w-full mt-4">
+            <div className="flex flex-row space-x-3 w-full mt-4">
               <Link href="/login" >
                 <button type="button" className="w-full text-black bg-white hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-4 py-2">
                   Login
@@ -146,7 +146,7 @@ export default function Header() {
         {/* Desktop Navbar */}
         <div className="hidden md:flex items-center space-x-6">
           {navigation.map((item) => (
-            <Link key={item.name} href={item.href} className="text-white hover:text-gray-400">
+            <Link key={item.name} href={item.href} className="nav-link text-white hover:text-gray-400">
               {item.name}
             </Link>
           ))}
