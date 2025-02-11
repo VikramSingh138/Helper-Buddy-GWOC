@@ -102,7 +102,7 @@ export default function Header() {
       <nav className="container mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <Image src="/assets/helperbuddy-logo.svg" alt="HelperBuddy" width={75} height={75} />
+          <Image src="/assets/helperbuddy_logo.jpeg" alt="HelperBuddy" width={120} height={120} />
         </Link>
 
         {/* Mobile Menu Button (Toggles Open/Close) */}
