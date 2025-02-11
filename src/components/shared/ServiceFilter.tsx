@@ -29,6 +29,7 @@ export default function ServiceFilter({ onFilter }: ServiceFilterProps) {
       <div className="space-y-4">
         <div>
           <Input
+            className='form-control'
             label="Category"
             type="text"
             placeholder="e.g., Cleaning, Plumbing"
@@ -39,6 +40,7 @@ export default function ServiceFilter({ onFilter }: ServiceFilterProps) {
         
         <div>
           <Input
+            className='form-control'
             label="Pincode"
             type="text"
             placeholder="Enter pincode"
@@ -48,8 +50,8 @@ export default function ServiceFilter({ onFilter }: ServiceFilterProps) {
         </div>
 
         <div className="flex justify-between">
-          <Button variant="outline" onClick={handleClearFilters}>Clear</Button>
-          <Button onClick={handleApplyFilters}>Apply</Button>
+          <Button variant="tertiary" onClick={handleClearFilters}>Clear</Button>
+          <Button variant='secondary' onClick={handleApplyFilters}>Apply</Button>
         </div>
       </div>
     </div>

@@ -74,7 +74,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         <p className="text-gray-300 text-sm mb-4">{service.description}</p>
         <div className="flex items-center justify-between">
           <span className="text-gray-200 font-bold">₹{service.price}</span>
-          <Button variant="primary" size="sm" onClick={() => setIsBookingOpen(true)}>
+          <Button variant="tertiary" size="sm" onClick={() => setIsBookingOpen(true)}>
             Book Now
           </Button>
         </div>
@@ -97,7 +97,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             onChange={(e) => setPincode(e.target.value)}
             required
           />
-          <Button onClick={handleBook} disabled={!dateTime || !pincode}>
+          <Button variant='secondary' onClick={handleBook} disabled={!dateTime || !pincode}>
             Confirm Booking
           </Button>
         </div>

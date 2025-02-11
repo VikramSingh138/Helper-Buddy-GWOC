@@ -26,6 +26,22 @@ const sampleServices: Service[] = [
     category: "Plumbing",
     availablePincodes: ["400001", "400003"],
   },
+  {
+    id: "3",
+    title: "Carpenting",
+    description: "Expert carpentry services",
+    price: 1099,
+    category: "Carpenting",
+    availablePincodes: ["400001", "400005"],
+  },
+  {
+    id: "4",
+    title: "Appliences Repairing",
+    description: "Repairing and Service of Appliances",
+    price: 1099,
+    category: "Repairing",
+    availablePincodes: ["400003", "400005"],
+  },
 ];
 
 export default function Home() {
