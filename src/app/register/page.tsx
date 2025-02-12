@@ -57,7 +57,6 @@ export default function RegisterPage() {
           <select className="form-select" aria-label="Default select example" value={userType} onChange={(e) => setUserType(e.target.value)} autoComplete="off">
             <option value="user">User</option>
             <option value="admin">Admin</option>
-            <option value="serviceProvider">Service Provider</option>
           </select>
         </div>
         <button type="submit" className="btn btn-primary">Register</button>

@@ -154,7 +154,7 @@ export default function Home() {
                   />
                   <button className="px-4 py-2 bg-green-500 text-white rounded-r-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff">
-                      <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
+                      <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
                     </svg>
                   </button>
                 </form>
@@ -177,6 +177,83 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* FAQ Section */}
+        <section className=" container relative mt-16 px-4">
+          <h2 className="text-center">Frequently Asked Questions</h2>
+          <div className="container mt-4">
+            <div className="row d-flex justify-content-center g-3">
+              <div className="col-md-6 col-12">
+                <div className="card border-0 p-3">
+                  <h5>What is HelperBuddy?</h5>
+                  <p>HelperBuddy is a cleaning service that helps keep your home and office clean. We also clean air conditioning units. Our goal is to make your spaces fresh and healthy.</p>
+                </div>
+              </div>
+              <div className="col-md-6 col-12">
+                <div className="card border-0 p-3">
+                  <h5>What cleaning services do you offer?</h5>
+                  <p>We offer a variety of cleaning services, including home cleaning, office cleaning, and AC cleaning. Whether you need a deep clean or regular maintenance, we’ve got you covered.</p>
+                </div>
+              </div>
+            </div>
+            <div className="row d-flex justify-content-center g-3">
+              <div className="col-md-6 col-12">
+                <div className="card border-0 p-3">
+                  <h5>How do I book a cleaning service?</h5>
+                  <p>Booking is easy! Just give us a call or fill out our online form. We’ll set up a time that works best for you.</p>
+                </div>
+              </div>
+              <div className="col-md-6 col-12">
+                <div className="card border-0 p-3">
+                  <h5>How much does your service cost?</h5>
+                  <p>The cost depends on the size of your home or office and the type of cleaning you need. We have options for every budget. For exact prices, check our pricing page/contact us.</p>
+                </div>
+              </div>
+            </div>
+            <div className="row d-flex justify-content-center g-3">
+              <div className="col-md-6 col-12">
+                <div className="card border-0 p-3">
+                  <h5>Is HelperBuddy the best cleaning service in India?</h5>
+                  <p>Many of our customers think so! We pride ourselves on quality service and customer satisfaction. Check our reviews to see what others are saying.</p>
+                </div>
+              </div>
+              <div className="col-md-6 col-12">
+                <div className="card border-0 p-3">
+                  <h5>How can I find good cleaning services near me?</h5>
+                  <p>If you're looking for reliable cleaning services nearby, Helper Buddy is the answer. We connect you with experienced cleaners who can handle everything from regular home cleaning to deep cleaning. Simply book through our platform, and we’ll send a trusted professional to your home.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section className="container relative mt-16 px-4">
+          <h2 className="text-center">Get in touch!</h2>
+          <div className="container" style={{maxWidth: '60%'}}>
+            <form>
+              <div className="mb-3">
+                <label htmlFor="name" className="form-label">Name</label>
+                <input type="text" className="form-control" id="name" autoComplete="name" />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">Email address</label>
+                <input type="email" className="form-control" id="email" placeholder='example@email.com' autoComplete="email" aria-describedby="emailHelp" />
+                <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="phone" className="form-label">Phone</label>
+                <input type="text" className="form-control" id="phone" autoComplete="tel" />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="desc" className="form-label">Name</label>
+                <input type="text" className="form-control" id="desc" autoComplete="description" />
+              </div>
+              <button type="submit" className="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </section>
+
       </div>
     </>
   );

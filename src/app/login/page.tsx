@@ -36,7 +36,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className='container-fluid my-10' style={{maxWidth: '60%'}}>
+    <div className='container-fluid my-10 p-4 max-w-md mx-auto'>
       <h1 className='text-center'>Sign In</h1>
       <form onSubmit={handleLogin}>
         <div className="mb-3">

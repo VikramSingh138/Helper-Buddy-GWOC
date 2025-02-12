@@ -34,28 +34,17 @@ export default function PartnerRegisterPage() {
 
   return (
     <div className="p-4 max-w-md mx-auto">
-      <h1 className="mb-4 text-2xl">Service Provider Registration</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          placeholder="Provider Email"
-          className="w-full border p-2"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border p-2"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button
-          className="bg-blue-600 text-white py-2 px-4 rounded"
-          type="submit"
-        >
-          Register
-        </button>
+      <h1 className="text-center mb-4 text-2xl">Service Provider Registration</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">Provider Email</label>
+          <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" aria-describedby="emailHelp" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
+        </div>
+        <button type="submit" className="btn btn-primary">Register</button>
       </form>
     </div>
   );
