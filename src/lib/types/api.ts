@@ -2,7 +2,8 @@
 export interface Blog {
   _id?: string;
   title: string;
+  subtitle: string;
   content: string;
   imageUrl: string;
-  createdAt?: string;
+  date?: string;
 }
