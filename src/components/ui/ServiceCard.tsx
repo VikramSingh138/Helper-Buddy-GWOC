@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Service } from '@/lib/types';
-import Button from './Button';
-import Modal from './Modal';
-import Input from './Input';
-import { useAuth } from '@/lib/auth';
+import { useState } from "react";
+import { Service } from "@/lib/types";
+import Button from "./Button";
+import Modal from "./Modal";
+import Input from "./Input";
+import { useAuth } from "@/lib/auth";
 
 interface ServiceCardProps {
   service: Service;
@@ -13,56 +13,69 @@ interface ServiceCardProps {
 
 export default function ServiceCard({ service }: ServiceCardProps) {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [dateTime, setDateTime] = useState('');
-  const [pincode, setPincode] = useState('');
+  const [dateTime, setDateTime] = useState("");
+  const [pincode, setPincode] = useState("");
   const { user } = useAuth();
 
   // Add default image
-  const defaultImage = '/images/service-default.jpg'; // Make sure this image exists in your public folder
+  const defaultImage = "/images/service-default.jpg"; // Make sure this image exists in your public folder
   const backgroundImage = service.image || defaultImage;
 
   const handleBook = async () => {
     if (!user) {
-      alert('Please login to book a service');
+      alert("Please login to book a service");
+      return;
+    }
+
+    // Ensure dateTime is valid
+    if (!dateTime || Number.isNaN(new Date(dateTime).getTime())) {
+      alert("Please provide a valid date and time");
       return;
     }
 
     try {
-      const response = await fetch('/api/service-requests', {
-        method: 'POST',
+      const response = await fetch("/api/service-requests", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          serviceId: service.id,
+          serviceCategory: service.category,
+          requestedPincode: pincode,
           userId: user.id,
           dateTime: new Date(dateTime),
-          pincode,
         }),
       });
 
-      if (!response.ok) throw new Error('Failed to create service request');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to create service request");
+      }
 
       // Reset form and close modal
-      setDateTime('');
-      setPincode('');
+      setDateTime("");
+      setPincode("");
       setIsBookingOpen(false);
-      alert('Service request sent successfully!');
+      alert("Service request sent successfully!");
     } catch (error) {
-      console.error('Error creating service request:', error);
-      alert('Failed to send service request');
+      console.error("Error creating service request:", error);
+      if (error instanceof Error) {
+        alert(`Failed to send service request: ${error.message}`);
+      } else {
+        alert("Failed to send service request");
+      }
     }
   };
 
   return (
-    <div 
+    <div
       className="relative bg-black text-white rounded-lg shadow-md overflow-hidden transition-transform transform 
                  hover:scale-105 hover:shadow-2xl"
-      style={{ 
-        backgroundImage: `url(${backgroundImage})`, 
-        backgroundSize: 'cover', 
-        backgroundPosition: 'center',
-        minHeight: '200px' // Add minimum height
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "200px", // Add minimum height
       }}
     >
       {/* Dark Overlay for Better Readability */}
@@ -74,14 +87,22 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         <p className="text-gray-300 text-sm mb-4">{service.description}</p>
         <div className="flex items-center justify-between">
           <span className="text-gray-200 font-bold">₹{service.price}</span>
-          <Button variant="tertiary" size="sm" onClick={() => setIsBookingOpen(true)}>
+          <Button
+            variant="tertiary"
+            size="sm"
+            onClick={() => setIsBookingOpen(true)}
+          >
             Book Now
           </Button>
         </div>
       </div>
 
       {/* Booking Modal */}
-      <Modal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} title={`Book ${service.title}`}>
+      <Modal
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+        title={`Book ${service.title}`}
+      >
         <div className="space-y-4">
           <Input
             label="Preferred Date and Time"
@@ -97,7 +118,11 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             onChange={(e) => setPincode(e.target.value)}
             required
           />
-          <Button variant='secondary' onClick={handleBook} disabled={!dateTime || !pincode}>
+          <Button
+            variant="secondary"
+            onClick={handleBook}
+            disabled={!dateTime || !pincode}
+          >
             Confirm Booking
           </Button>
         </div>

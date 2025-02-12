@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User, ServiceProvider, Admin } from '@/lib/models/User';
+import { User, Admin } from '@/lib/models/User';
 import { connectDB } from '@/lib/db/mongoose';
 
-const JWT_SECRET = process.env.JWT_SECRET!;
+const JWT_SECRET = process.env.NEXT_PUBLIC_JWT_SECRET!; // Ensure this environment variable is set
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,8 +15,6 @@ export async function POST(request: NextRequest) {
     let Model;
     if (userType === 'user') {
       Model = User;
-    } else if (userType === 'serviceProvider') {
-      Model = ServiceProvider;
     } else if (userType === 'admin') {
       Model = Admin;
     } else {

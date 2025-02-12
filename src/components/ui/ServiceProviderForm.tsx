@@ -4,7 +4,11 @@ import { useState } from 'react';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 
-export default function ServiceProviderForm() {
+interface ServiceProviderFormProps {
+  onSubmit: () => void;
+}
+
+export default function ServiceProviderForm({ onSubmit }: ServiceProviderFormProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -35,9 +39,13 @@ export default function ServiceProviderForm() {
     //     throw new Error('Failed to submit service');
     //   }
     //   console.log('Service submitted successfully');
+    //   onSubmit();
     // } catch (error) {
     //   console.error('Error submitting service:', error);
     // }
+
+    // For now, just call onSubmit
+    onSubmit();
   };
 
   return (

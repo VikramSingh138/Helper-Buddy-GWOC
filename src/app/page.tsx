@@ -2,11 +2,13 @@
 
 import SearchBar from "@/components/ui/SearchBar";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Service } from "@/lib/types";
 import ServiceCard from "@/components/ui/ServiceCard";
 import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET!;
 import Image from 'next/image';
+
 
 // Sample data - Replace with actual API call
 const sampleServices: Service[] = [
@@ -47,6 +49,7 @@ const sampleServices: Service[] = [
 export default function Home() {
   const [services, setServices] = useState<Service[]>(sampleServices);
   const [user, setUser] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -54,7 +57,13 @@ export default function Home() {
     if (token && userData) {
       try {
         const decoded = jwt.verify(token, JWT_SECRET) as jwt.JwtPayload;
-        setUser(JSON.parse(userData));
+        const user = JSON.parse(userData);
+        setUser(user);
+
+        // Redirect service providers to their dashboard
+        if (user.userType === 'serviceProvider') {
+          router.push('/provider/dashboard');
+        }
 
         // Extend token expiration to 20 days
         const newToken = jwt.sign(
@@ -69,7 +78,7 @@ export default function Home() {
         localStorage.removeItem("user");
       }
     }
-  }, []);
+  }, [router]);
 
   const handleSearch = (query: string) => {
     if (!query) {

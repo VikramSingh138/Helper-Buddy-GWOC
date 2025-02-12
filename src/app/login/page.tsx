@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+const JWT_SECRET = process.env.NEXT_PUBLIC_JWT_SECRET!; // Ensure this environment variable is set
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -4,6 +4,7 @@ interface User {
   id: string;
   role: string;
   name: string;
+  email: string;
 }
 
 export function logout() {
@@ -33,5 +34,12 @@ export function useAuth() {
     }
   }, []);
 
-  return { user, isServiceProvider };
+  const login = async (provider: any, token: string) => {
+    // Store user & token in state or context
+    setUser({ id: provider.id, email: provider.email, name: provider.name, role: provider.role });
+    // Also store token, e.g., localStorage
+    localStorage.setItem("spToken", token);
+  };
+
+  return { user, isServiceProvider, login };
 }

@@ -1,33 +1,57 @@
-import { NextResponse } from 'next/server';
-import { ServiceRequest } from '@/lib/types';
+import { NextRequest, NextResponse } from 'next/server';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { ServiceProvider } from '@/lib/models/User';
+import { ServiceProviderInfo } from '@/lib/models/ServiceProviderInfo';
+import { connectDB } from '@/lib/db/mongoose';
 
-// This is a mock database. In a real app, you'd use a proper database
-let serviceRequests: ServiceRequest[] = [];
+const JWT_SECRET = process.env.NEXT_PUBLIC_JWT_SECRET!;
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const newRequest: ServiceRequest = {
-      id: Date.now().toString(),
-      ...body,
-      status: 'pending',
-    };
-    serviceRequests.push(newRequest);
-    return NextResponse.json(newRequest, { status: 201 });
+    await connectDB();
+    const { email, password, name, phone, pincodes, services } = await request.json();
+
+    const existingProvider = await ServiceProvider.findOne({ email });
+    if (existingProvider) {
+      return NextResponse.json({
+        success: false,
+        message: 'Email already registered'
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newProvider = await ServiceProvider.create({
+      email,
+      hashedPassword,
+      name,
+      phone
+    });
+
+    // Save pincode & services info
+    await ServiceProviderInfo.create({
+      providerId: newProvider.email,
+      services,
+      pincodes
+    });
+
+    const token = jwt.sign({ id: newProvider._id, email: newProvider.email, userType: 'serviceProvider' }, JWT_SECRET, { expiresIn: '1h' });
+
+    return NextResponse.json({
+      success: true,
+      message: 'Service provider registered successfully',
+      token,
+      provider: {
+        id: newProvider._id,
+        email: newProvider.email,
+        name: newProvider.name
+      }
+    });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create request' }, { status: 500 });
+    console.error('Registration error:', error);
+    return NextResponse.json({
+      success: false,
+      message: 'Registration failed'
+    });
   }
-}
-
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const providerId = searchParams.get('providerId');
-  
-  if (!providerId) {
-    return NextResponse.json({ error: 'Provider ID is required' }, { status: 400 });
-  }
-
-  // In a real app, you'd query your database here
-  const requests = serviceRequests.filter(req => req.serviceProviderId === providerId);
-  return NextResponse.json(requests);
 }

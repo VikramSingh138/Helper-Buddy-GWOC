@@ -3,16 +3,18 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth';
 import { ServiceRequest } from '@/lib/types';
+import ServiceProviderForm from '@/components/ui/ServiceProviderForm';
 
 export default function ProviderDashboard() {
   const { user, isServiceProvider } = useAuth();
   const [acceptedBookings, setAcceptedBookings] = useState<ServiceRequest[]>([]);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   useEffect(() => {
-    if (user && isServiceProvider) {
+    if (user && isServiceProvider && isFormSubmitted) {
       fetchAcceptedBookings();
     }
-  }, [user, isServiceProvider]);
+  }, [user, isServiceProvider, isFormSubmitted]);
 
   const fetchAcceptedBookings = async () => {
     try {
@@ -27,6 +29,10 @@ export default function ProviderDashboard() {
 
   if (!isServiceProvider) {
     return <div>Access Denied</div>;
+  }
+
+  if (!isFormSubmitted) {
+    return <ServiceProviderForm onSubmit={() => setIsFormSubmitted(true)} />;
   }
 
   return (
