@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
     // Save pincode & services info
     await ServiceProviderInfo.create({
-      providerId: newProvider.email,
+      providerId: newProvider._id,
       services,
       pincodes
     });
