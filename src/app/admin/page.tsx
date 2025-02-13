@@ -1,5 +1,6 @@
-// admin dashboard main page
 "use client";
+// admin dashboard main page
+
 import React, { useState } from 'react';
 
 export default function AdminDashboardPage() {
