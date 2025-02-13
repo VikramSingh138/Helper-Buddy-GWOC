@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Blog } from "@/lib/types/api";
 import BlogCard from '@/components/ui/BlogCard';
